@@ -64,8 +64,11 @@ def show_one_tea_recipe(id):
     tea = models.Tea.get_by_id(id)
     print(tea)
 
+    tea_dict = model_to_dict(tea)
+    tea_dict['creator'].pop('password')
+
     return jsonify(
-        data = model_to_dict(tea),
+        data = tea_dict,
         message = 'I see something...',
         status = 200
     ), 200
