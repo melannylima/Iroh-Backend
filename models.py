@@ -1,7 +1,16 @@
 from peewee import *
 import datetime
+from flask_login import UserMixin
 
 DATABASE = SqliteDatabase('tea.sqlite')
+
+class User(UserMixin, Model):
+    username = CharField(unique=True)
+    email = CharField(unique=True)
+    password = CharField()
+
+    class Meta:
+        database = DATABASE
 
 class Tea(Model):
     name = CharField()
@@ -14,7 +23,7 @@ class Tea(Model):
     serve_iced = BooleanField(default=False)
 
     # user is going to become integrated
-    creator = CharField()
+    creator = ForeignKeyField(User, backref='tea')
 
     post_time = DateTimeField(default=datetime.datetime.now)
 
@@ -24,6 +33,6 @@ class Tea(Model):
 
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([Tea], safe=True)
-    print("DB connected")
+    DATABASE.create_tables([User, Tea], safe=True)
+    print("DB connected & tables created")
     DATABASE.close()
