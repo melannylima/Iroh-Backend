@@ -28,9 +28,9 @@ class Tea(Model):
     brew_time = CharField()
     
     #tags
-    has_dairy = BooleanField(default=False)
-    has_caffeine = BooleanField(default=False)
-    serve_iced = BooleanField(default=False)
+    # has_dairy = BooleanField(default=False)
+    # has_caffeine = BooleanField(default=False)
+    # serve_iced = BooleanField(default=False)
 
     # user is going to become integrated
     creator = ForeignKeyField(User, backref='tea')
